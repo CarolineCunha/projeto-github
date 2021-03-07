@@ -21,6 +21,7 @@ const Dashboard: React.FC = () => {
         const response = await api.get(`repos/${newRepo}`);
         const repository = response.data;
         setRepositories([...repositories,repository]);
+        setNewRepo('');
     }
     return (
     <>
@@ -30,16 +31,19 @@ const Dashboard: React.FC = () => {
         <button type="submit">Pesquisar</button>
     </Form>
         <Repositories>
-            <a href="teste">
+            {repositories.map(repository =>(
+                <a key={repository.full_name} href="teste">
                 <img 
-                src="https://avatars.githubusercontent.com/u/66327211?s=400&u=f88719a4d24585502bd2feefc0773048e5c231cc&v=4"
-                alt="Caroline Cunha"></img>
+                src={repository.owner.avatar_url}
+                alt={repository.owner.login} 
+                />
                 <div>
-                    <strong>CarolineCunha/projeto-github</strong>
-                    <p>projeto github com ReactJs</p>
+                    <strong>{repository.full_name}</strong>
+                    <p>{repository.description}</p>
                 </div>
                 <FiChevronRight size={20} />
             </a>
+            ))}
         </Repositories>
      </>   
      );
